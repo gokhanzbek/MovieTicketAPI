@@ -1,13 +1,15 @@
 ﻿using MediatR;
+using MediatR;
+using MovieTicketAPI.Application.Abstractions.Services;
+using MovieTicketAPI.Application.Features.Command.Halls.RemoveHall;
+using MovieTicketAPI.Application.Repositories.Movies;
+using MovieTicketAPI.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using MediatR;
-using System.Threading.Tasks;
-using MovieTicketAPI.Application.Repositories.Movies;
-using MovieTicketAPI.Domain.Entities;
 using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace MovieTicketAPI.Application.Features.Command.Movie.CreateMovie
 {
@@ -22,8 +24,11 @@ namespace MovieTicketAPI.Application.Features.Command.Movie.CreateMovie
 
         public async Task<CreateMovieCommandResponse> Handle(CreateMovieCommandRequest request, CancellationToken cancellationToken)
         {
+            
+
             Domain.Entities.Movie newMovie = new Domain.Entities.Movie
             {
+                ImageUrl = request.ImageUrl,
                 Title = request.Title,
                 DurationInMinutes = request.DurationInMinutes,
                 Genre = request.Genre,

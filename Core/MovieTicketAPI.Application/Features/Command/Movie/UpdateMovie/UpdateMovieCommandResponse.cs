@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MovieTicketAPI.Application.Features.Command.Movie.UpdateMovie
 {
-    internal class UpdateMovieCommandResponse
+    public class UpdateMovieCommandResponse
     {
         public bool IsSuccess { get; set; }
         public string Message { get; set; } = null!;

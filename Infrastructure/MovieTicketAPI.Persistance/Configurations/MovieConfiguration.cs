@@ -19,6 +19,7 @@ namespace MovieTicketAPI.Persistence.Configurations
             builder.Property(m => m.Director).HasMaxLength(100);
             builder.Property(m => m.Description).HasMaxLength(500);
             builder.Property(m => m.DurationInMinutes).IsRequired();
+            builder.Property(m => m.ImageUrl).IsRequired(false).HasMaxLength(500);
         }
     }
 }

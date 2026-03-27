@@ -197,6 +197,9 @@ namespace MovieTicketAPI.Persistence.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -287,6 +290,10 @@ namespace MovieTicketAPI.Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<int>("ReleaseYear")
                         .HasColumnType("int");
 
@@ -336,6 +343,46 @@ namespace MovieTicketAPI.Persistence.Migrations
                     b.HasIndex("MovieId");
 
                     b.ToTable("Showtimes");
+                });
+
+            modelBuilder.Entity("MovieTicketAPI.Domain.Entities.Ticket", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("SeatNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ShowtimeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("ShowtimeId", "SeatNumber")
+                        .IsUnique();
+
+                    b.ToTable("Tickets");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -408,9 +455,33 @@ namespace MovieTicketAPI.Persistence.Migrations
                     b.Navigation("Movie");
                 });
 
+            modelBuilder.Entity("MovieTicketAPI.Domain.Entities.Ticket", b =>
+                {
+                    b.HasOne("MovieTicketAPI.Domain.Entities.Identity.AppUser", "AppUser")
+                        .WithMany("Tickets")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MovieTicketAPI.Domain.Entities.Showtime", "Showtime")
+                        .WithMany()
+                        .HasForeignKey("ShowtimeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Showtime");
+                });
+
             modelBuilder.Entity("MovieTicketAPI.Domain.Entities.Hall", b =>
                 {
                     b.Navigation("Showtimes");
+                });
+
+            modelBuilder.Entity("MovieTicketAPI.Domain.Entities.Identity.AppUser", b =>
+                {
+                    b.Navigation("Tickets");
                 });
 
             modelBuilder.Entity("MovieTicketAPI.Domain.Entities.Movie", b =>

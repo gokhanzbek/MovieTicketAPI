@@ -12,6 +12,7 @@ namespace MovieTicketAPI.Domain.Entities
         public string Title { get; set; }           // Ad (nvarchar 150)
         public int DurationInMinutes { get; set; }  // Suresi (int)
         public string Genre { get; set; }           // Tur (nvarchar 50)
+        public string ImageUrl { get; set; }
         public string Director { get; set; }        // Yonetmen (nvarchar 100)
         public int ReleaseYear { get; set; }        // Yil (int)
         public string Description { get; set; }     // Aciklama (nvarchar 500)

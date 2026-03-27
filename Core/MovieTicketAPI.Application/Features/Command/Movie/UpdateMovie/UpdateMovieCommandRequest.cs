@@ -16,7 +16,7 @@ namespace MovieTicketAPI.Application.Features.Command.Movie.UpdateMovie
         public string Director { get; set; }
         public int ReleaseYear { get; set; }
         public string Description { get; set; }
-
+        public string ImageUrl { get; set; }
         public bool IsCompleted { get; set; } // Görev tamamlandı mı?
     }
 }

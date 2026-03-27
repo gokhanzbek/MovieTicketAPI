@@ -11,7 +11,8 @@ namespace MovieTicketAPI.Domain.Entities.Identity
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
-        // İleride buraya "ICollection<Ticket> Tickets" (Kullanıcının aldığı biletler) ekleyeceğiz.
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public ICollection<Ticket> Tickets { get; set; } //(Kullanıcının aldığı biletler) 
     }
 }
+ 

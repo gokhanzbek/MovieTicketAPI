@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using MovieTicketAPI.Application.Abstractions.Services;
 using MovieTicketAPI.Application.Repositories;
 using MovieTicketAPI.Application.Repositories.Halls;
 using System;
@@ -20,6 +21,10 @@ namespace MovieTicketAPI.Application.Features.Command.Halls.CreateHall
 
         public async Task<CreateHallCommandResponse> Handle(CreateHallCommandRequest request, CancellationToken cancellationToken)
         {
+            
+
+            
+
             Domain.Entities.Hall NewHall = new Domain.Entities.Hall
             {
                 Capacity = request.Capacity,

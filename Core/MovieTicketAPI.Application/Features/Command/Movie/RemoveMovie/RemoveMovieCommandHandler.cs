@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using MovieTicketAPI.Application.Abstractions.Services;
+using MovieTicketAPI.Application.Features.Command.Halls.RemoveHall;
 using MovieTicketAPI.Application.Repositories.Movies;
 using MovieTicketAPI.Application.Repositories.Movies.MovieTicketAPI.Domain.Repositories;
 using System;
@@ -22,6 +24,8 @@ namespace MovieTicketAPI.Application.Features.Command.Movie.RemoveMovie
 
         public async Task<RemoveMovieCommandResponse> Handle(RemoveMovieCommandRequest request, CancellationToken cancellationToken)
         {
+            
+
             Domain.Entities.Movie movie = await _movieReadRepository.GetByIdAsync(request.Id.ToString(), tracking: true);
             if (movie == null)
             {

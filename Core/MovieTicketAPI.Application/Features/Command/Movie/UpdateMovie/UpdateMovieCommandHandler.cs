@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using MovieTicketAPI.Application.Abstractions.Services;
+using MovieTicketAPI.Application.Features.Command.Halls.UpdateHall;
 using MovieTicketAPI.Application.Repositories.Movies;
 using MovieTicketAPI.Application.Repositories.Movies.MovieTicketAPI.Domain.Repositories;
 using System;
@@ -22,6 +24,9 @@ namespace MovieTicketAPI.Application.Features.Command.Movie.UpdateMovie
 
         async Task<UpdateMovieCommandResponse> IRequestHandler<UpdateMovieCommandRequest, UpdateMovieCommandResponse>.Handle(UpdateMovieCommandRequest request, CancellationToken cancellationToken)
         {
+
+            
+
             Domain.Entities.Movie movie = await _movieReadRepository.GetByIdAsync(request.Id.ToString(), tracking: true);
 
             if (movie == null)
@@ -29,7 +34,7 @@ namespace MovieTicketAPI.Application.Features.Command.Movie.UpdateMovie
                 return new UpdateMovieCommandResponse { IsSuccess = false, Message = "Aradığınız Film bulunamadı!" };
             }
 
-
+            movie.ImageUrl = request.ImageUrl;
             movie.Title = request.Title;
             movie.Director = request.Director;
             movie.DurationInMinutes = request.DurationInMinutes;

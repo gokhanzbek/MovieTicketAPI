@@ -19,6 +19,7 @@ namespace MovieTicketAPI.Persistence.Contexts
         {
         }
 
+        public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Hall> Halls { get; set; }
         public DbSet<Showtime> Showtimes { get; set; }
@@ -28,6 +29,11 @@ namespace MovieTicketAPI.Persistence.Contexts
         {
             // Identity tablolarının oluşması için base.OnModelCreating(modelBuilder) ÇAĞRILMAK ZORUNDADIR!
             base.OnModelCreating(modelBuilder);
+
+            // Aynı seans (ShowtimeId) ve aynı koltuk (SeatNumber) bir daha satılamaz!
+            modelBuilder.Entity<Ticket>()
+                .HasIndex(t => new { t.ShowtimeId, t.SeatNumber })
+                .IsUnique();
 
             // Yazdığımız Configuration sınıflarını (MovieConfiguration vb.) otomatik bulup uygular
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

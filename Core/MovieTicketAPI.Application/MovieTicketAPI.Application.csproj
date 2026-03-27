@@ -14,10 +14,4 @@
 		<PackageReference Include="MediatR" Version="14.0.0" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Features\Command\Halls\UpdateHall\" />
-	  <Folder Include="Features\Command\Halls\RemoveHall\" />
-	  <Folder Include="Features\Queries\" />
-	</ItemGroup>
-
 </Project>
