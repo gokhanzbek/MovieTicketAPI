@@ -9,7 +9,7 @@ namespace MovieTicketAPI.Application.Abstractions.Token
 {
     public interface ITokenHandler
     {
-        DTOs.Token CreateAccessToken(int minute, AppUser user);
+        DTOs.Token CreateAccessToken(int minute, AppUser user, IList<string> roles);
         //isim çakışması oldu o yüzden DTOs dan geldiğini belirttik
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MovieTicketAPI.Domain.Entities.Common;
 using MovieTicketAPI.Domain.Entities.Identity;
+using MovieTicketAPI.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,7 @@ using System.Threading.Tasks;
 namespace MovieTicketAPI.Domain.Entities
 {
     // Bilet Durumları için Enum
-    public enum TicketStatus
-    {
-        Active = 1,   // Aktif / Geçerli
-        Canceled = 2, // İptal Edildi
-        Past = 3      // Geçmiş (İstersen bunu enum'da tutabilir veya anlık hesaplayabiliriz)
-    }
+   
     public class Ticket : BaseEntity
     {
         // 1. Müşteri (AppUser) Bağlantısı

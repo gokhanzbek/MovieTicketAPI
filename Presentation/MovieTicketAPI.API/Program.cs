@@ -6,6 +6,8 @@ using MovieTicketAPI.Persistence;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
+using MovieTicketAPI.Domain.Entities.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -102,5 +104,39 @@ app.UseAuthentication(); // Önce kimlik doğrulanır (Sen kimsin?)
 app.UseAuthorization();  // Sonra yetki kontrol edilir (Bunu yapmaya iznin var mı?)
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+
+    // 1. Sistemde "Admin" rozeti (rolü) yoksa, hemen matbaada bas
+    if (!await roleManager.RoleExistsAsync("Admin"))
+    {
+        await roleManager.CreateAsync(new AppRole { Name = "Admin", NormalizedName = "ADMIN" });
+    }
+
+    // 2. "admin" adında bir kullanıcı yoksa, hemen oluştur
+    if (await userManager.FindByNameAsync("admin") == null)
+    {
+        var adminUser = new AppUser
+        {
+            UserName = "admin",
+            Email = "admin@sinemaprojesi.com",
+            FirstName = "Admin",
+            LastName = "Admin",
+            // Eğer AppUser içinde FirstName, LastName gibi zorunlu alanların varsa buraya onları da yaz.
+        };
+
+        // Şifreyi veriyoruz (Identity varsayılan olarak büyük harf, sayı ve özel karakter ister)
+        var result = await userManager.CreateAsync(adminUser, "Admin123*"); 
+
+        // 3. Hesap başarıyla açıldıysa, "Admin" rozetini (rolünü) yakasına tak!
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(adminUser, "Admin");
+        }
+    }
+}
 
 app.Run();

@@ -63,7 +63,7 @@ namespace MovieTicketAPI.Application.Features.Command.Tickets.CreateTicket
                     ShowtimeId = request.ShowtimeId,
                     SeatNumber = seat,
                     Price = request.Price, // Not: İleride fiyatı request'ten almak yerine veritabanındaki (Showtime) fiyattan çekmek daha güvenlidir! (Adam request'i hackleyip 1 TL yollayabilir)
-                    Status = Domain.Entities.TicketStatus.Active
+                    Status = Domain.Enums.TicketStatus.Active
                 });
             }
 

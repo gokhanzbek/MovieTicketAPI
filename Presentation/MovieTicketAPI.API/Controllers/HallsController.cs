@@ -24,6 +24,7 @@ namespace MovieTicketAPI.API.Controllers
 
         // 1. GET: Tüm salonları listele
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
             var response = await _mediator.Send(new GetAllHallsQueryRequest());
@@ -32,6 +33,7 @@ namespace MovieTicketAPI.API.Controllers
 
         // 2. GET: ID'ye göre tek bir salon getir
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var response = await _mediator.Send(new GetByIdHallQueryRequest { Id = id });

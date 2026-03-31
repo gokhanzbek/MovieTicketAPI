@@ -17,9 +17,6 @@ namespace MovieTicketAPI.Application.Features.Command.AppUser.LoginUser
         readonly SignInManager<Domain.Entities.Identity.AppUser> _signInManager;
         readonly ITokenHandler _tokenHandler;
 
-
-        
-
         public LoginUserCommandHandler(
             UserManager<Domain.Entities.Identity.AppUser> userManager,
             SignInManager<Domain.Entities.Identity.AppUser> signInManager,
@@ -45,20 +42,22 @@ namespace MovieTicketAPI.Application.Features.Command.AppUser.LoginUser
             }
 
             SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
+            
             if (result.Succeeded) // Authentication başarılı!
             {
-                Token token = _tokenHandler.CreateAccessToken(5, user);
+                // 1. İŞTE YENİ EKLENEN KISIM: Adamın rollerini veritabanından çekiyoruz
+                IList<string> userRoles = await _userManager.GetRolesAsync(user);
+
+                // 2. Çektiğimiz rolleri TokenHandler'a gönderiyoruz ki içine kazısın!
+                Token token = _tokenHandler.CreateAccessToken(5, user, userRoles); 
+                
                 return new LoginUserSuccessCommandResponse()
                 {
                     Token = token
                 };
             }
-            //return new LoginUserErrorCommandResponse()
-            //{
-            //    Message = "Kullanıcı adı veya şifre hatalı..."
-            //};
+            
             throw new AuthenticationErrorException();
-
         }
     }
 }

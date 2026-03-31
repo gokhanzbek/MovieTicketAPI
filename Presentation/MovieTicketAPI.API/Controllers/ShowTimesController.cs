@@ -24,6 +24,7 @@ namespace MovieTicketAPI.API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
             var response = await _mediator.Send(new GetAllShowTimesQueryRequest());
@@ -31,6 +32,7 @@ namespace MovieTicketAPI.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var response = await _mediator.Send(new GetByIdShowTimeQueryRequest { Id = id });

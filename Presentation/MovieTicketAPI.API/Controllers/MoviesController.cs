@@ -33,6 +33,7 @@ namespace MovieTicketAPI.API.Controllers
 
         // 2. GET: ID'ye göre tek bir film getir
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             // Rotadan gelen ID'yi request nesnesine koyup kuryeye veriyoruz.

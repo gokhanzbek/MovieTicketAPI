@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using MovieTicketAPI.Application.Repositories.Movies.MovieTicketAPI.Domain.Repositories;
 using System;
 using System.Collections.Generic;
@@ -22,7 +22,12 @@ namespace MovieTicketAPI.Application.Features.Queries.Movies.GetByIdMovie
             {
                 Id = movie.Id,
                 Title = movie.Title,
-                ImageUrl = movie.ImageUrl
+                ImageUrl = movie.ImageUrl,
+                Description = movie.Description,
+                DurationInMinutes = movie.DurationInMinutes,
+                Genre = movie.Genre,
+                Director = movie.Director,
+                ReleaseYear = movie.ReleaseYear
             };
         }
     }
